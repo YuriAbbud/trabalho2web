@@ -1,2 +1,121 @@
-# {% block conteudo %} -> Aqui eu vou montar o header do site, eu uso essa tag depois para infromar que vai ser o conteudo do site definido nos outros htmls
-# {% extends 'base.html' %} -> Nos outros htmls vou usar isso para puxar o header
+{# {% block conteudo %} -> Aqui eu vou montar o header do site, eu uso essa tag depois para infromar que vai ser o conteudo do site definido nos outros htmls #}
+{# {% extends 'base.html' %} -> Nos outros htmls vou usar isso para puxar o elemento #}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>{% block title %}{% endblock %}</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+  {% block extra_head %}{% endblock %}
+  <!-- Bloco vazio para filhos injetarem CSS extra se precisarem -->
+
+  <style>
+    :root {
+      --verde-nav: #1b7a4a;
+      --border-color: #dee2e6; 
+    }
+
+    .navbar-nfse {
+      background-color: var(--verde-nav) !important;
+    }
+
+    .navbar-nfse .navbar-brand,
+    .navbar-nfse .nav-link {
+      color: #ffffff !important;
+    }
+
+    .navbar-nfse .nav-link:hover {
+      color: #bcffd8 !important;
+    }
+
+    #sidebar {
+      width: 200px;
+      min-height: 80vh;
+      background-color: #f8f9fa;
+      border-right: 1px solid var(--border-color);
+      padding: 1.5rem 1rem;
+    }
+
+    @media (max-width: 991px) {
+      #sidebar { display: none !important; }
+      #main-content { padding: 1rem; }
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      color: #333;
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+      transition: background-color 0.15s, color 0.15s;
+    }
+
+    .sidebar-link:hover,
+    .sidebar-link.active {
+      background-color: #d4edda;
+      color: #1b7a4a;
+      font-weight: 600;
+    }
+
+    footer {
+      border-top: 1px solid var(--border-color);
+      margin-top: auto;
+    }
+  </style>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+  <nav class="navbar navbar-expand-lg navbar-nfse shadow-sm">
+    <div class="container-fluid">
+
+      <a class="navbar-brand fw-bold" href="{% url 'dashboard' %}">NFS-e Manager</a>
+
+      <button class="navbar-toggler" type="button"
+              data-bs-toggle="collapse" data-bs-target="#navbarMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="d-flex flex-grow-1">
+    <aside id="sidebar" class="d-none d-lg-block">
+      <nav class="d-flex flex-column">
+
+        <a href="{% url 'dashboard' %}"
+           class="sidebar-link {% block active_dash %}{% endblock %}">
+          Dashboard
+        </a>
+        <a href="{% url 'clientes' %}"
+           class="sidebar-link {% block active_cli %}{% endblock %}">
+          Clientes
+        </a>
+        <a href="{% url 'emitir_nota' %}"
+           class="sidebar-link {% block active_emitir %}{% endblock %}">
+          Emitir NFS-e
+        </a>
+
+      </nav>
+    </aside>
+
+    <main id="main-content" class="flex-grow-1 p-4">
+      {% block content %}{% endblock %}
+    </main>
+
+  </div>
+
+  <footer class="text-center text-muted py-3 small">
+    NFS-e Manager - Yuri R. Abbud©
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
