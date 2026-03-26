@@ -7,7 +7,6 @@ def dashboard(request):
         'notas_mes': 18,
         'valor_emitido': 'R$ 87.430,00',
         'impostos': 'R$ 4.371,50',
-        'notas_pendentes': 5,
         'clientes_ativos': 34,
     }
     return render(request, 'dashboard.html', {'resumo': resumo})

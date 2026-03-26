@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Emitir | NFS-e Manager{% endblock %}
+{% block active_emitir %}active{% endblock %}
+
+{% block content %}
+
+  <div class="mb-4">
+    <h4 class="fw-bold mb-0">Emitir NFS-e</h4>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-lg-7">
+      <div class="card shadow-sm">
+
+        <div class="card-header bg-success text-white fw-semibold">
+          Nova Nota Fiscal de Serviço
+        </div>
+
+        <div class="card-body p-4">
+          <form method="POST">
+            {% csrf_token %}
+
+            <div class="mb-3">
+              <label for="cliente" class="form-label fw-semibold">Cliente</label>
+              <select id="cliente" name="cliente" class="form-select">
+                <option value="" disabled selected>--- Selecione um cliente ---</option>
+                {% for cliente in clientes %}
+                <option value="{{ cliente.id }}">{{ cliente.nome }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="descricao" class="form-label fw-semibold">Descrição do Serviço</label>
+              <textarea id="descricao" name="descricao"
+                        class="form-control" rows="4"
+                        placeholder="Descreva o serviço prestado…">
+              </textarea>
+            </div>
+
+            <div class="mb-3">
+              <label for="valor" class="form-label fw-semibold">Valor Bruto (R$)</label>
+
+              <div class="input-group">
+                <span class="input-group-text">R$</span>
+                <input type="number" id="valor" name="valor"
+                       class="form-control" placeholder="0,00"
+                       min="0" step="0.01"/>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label for="aliquota" class="form-label fw-semibold">Alíquota ISS (%)</label>
+              <select id="aliquota" name="aliquota" class="form-select">
+                <option value="2">2%</option>
+                <option value="3" selected>3%</option>
+                <option value="5">5%</option>
+              </select>
+            </div>
+
+            <div class="d-flex gap-2">
+              <button type="submit" class="btn btn-success flex-grow-1">
+                Emitir Nota
+              </button>
+              <a href="{% url 'dashboard' %}" class="btn btn-outline-danger">
+                Cancelar
+              </a>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
