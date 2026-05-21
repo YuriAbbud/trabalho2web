@@ -98,9 +98,16 @@
            class="sidebar-link {% block active_cli %}{% endblock %}">
           Clientes
         </a>
+        <a href="{% url 'lista_notas' %}"
+          class="sidebar-link {% block active_notas %}{% endblock %}">
+          Notas Fiscais
+        </a>
         <a href="{% url 'emitir_nota' %}"
            class="sidebar-link {% block active_emitir %}{% endblock %}">
           Emitir NFS-e
+        </a>
+        <a href="{% url 'logout' %}" class="sidebar-link text-danger">
+          Sair
         </a>
 
       </nav>

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Notas | NFS-e Manager{% endblock %}
+{% block active_notas %}active{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h4 class="fw-bold mb-0">Notas Fiscais</h4>
+  <a href="{% url 'emitir_nota' %}" class="btn btn-success btn-sm">+ Emitir Nova</a>
+</div>
+<div class="card shadow-sm">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0">
+      <thead class="table-light">
+        <tr>
+          <th>#</th><th>Cliente</th><th>Valor</th><th>ISS</th><th>Líquido</th><th>Data</th><th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for nota in notas %}
+        <tr>
+          <td>{{ nota.pk }}</td>
+          <td>{{ nota.cliente.nome }}</td>
+          <td>R$ {{ nota.valor }}</td>
+          <td>R$ {{ nota.iss }}</td>
+          <td>R$ {{ nota.valor_liq }}</td>
+          <td>{{ nota.criado_em|date:"d/m/Y" }}</td>
+          <td>
+            <a href="{% url 'detalhe_nota' nota.pk %}" class="btn btn-sm btn-outline-secondary">Ver</a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="7" class="text-center text-muted py-4">Nenhuma nota emitida ainda.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

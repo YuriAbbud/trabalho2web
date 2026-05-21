@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}NF-{{ nota.pk }} | NFS-e Manager{% endblock %}
+{% block active_notas %}active{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h4 class="fw-bold mb-0">Nota Fiscal #{{ nota.pk }}</h4>
+  <div class="d-flex gap-2">
+    <a href="{% url 'editar_nota' nota.pk %}" class="btn btn-outline-success btn-sm">Editar</a>
+    <a href="{% url 'deletar_nota' nota.pk %}" class="btn btn-outline-danger btn-sm">Excluir</a>
+    <a href="{% url 'lista_notas' %}" class="btn btn-outline-secondary btn-sm">Voltar</a>
+  </div>
+</div>
+<div class="card shadow-sm">
+  <div class="card-body p-4">
+    <p><strong>Cliente:</strong> {{ nota.cliente.nome }}</p>
+    <p><strong>Descrição:</strong> {{ nota.descricao }}</p>
+    <p><strong>Valor Bruto:</strong> R$ {{ nota.valor }}</p>
+    <p><strong>Alíquota ISS:</strong> {{ nota.aliquota }}%</p>
+    <p><strong>ISS:</strong> R$ {{ nota.iss }}</p>
+    <p><strong>Valor Líquido:</strong> R$ {{ nota.valor_liq }}</p>
+    <p><strong>Emitida em:</strong> {{ nota.criado_em|date:"d/m/Y H:i" }}</p>
+  </div>
+</div>
+{% endblock %}

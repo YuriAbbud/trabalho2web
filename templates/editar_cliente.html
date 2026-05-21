@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Editar Cliente | NFS-e Manager{% endblock %}
+{% block active_cli %}active{% endblock %}
+{% block content %}
+<div class="mb-4"><h4 class="fw-bold mb-0">Editar Cliente</h4></div>
+<div class="row justify-content-center">
+  <div class="col-lg-6">
+    <div class="card shadow-sm">
+      <div class="card-header bg-success text-white fw-semibold">Editar Cliente</div>
+      <div class="card-body p-4">
+        <form method="POST">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Nome / Razão Social</label>
+            <input type="text" name="nome" class="form-control" value="{{ cliente.nome }}" required/>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">CPF / CNPJ</label>
+            <input type="text" name="cpf_cnpj" class="form-control" value="{{ cliente.cpf_cnpj }}" required/>
+          </div>
+          <div class="mb-4">
+            <label class="form-label fw-semibold">E-mail</label>
+            <input type="email" name="email" class="form-control" value="{{ cliente.email }}" required/>
+          </div>
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-success flex-grow-1">Salvar</button>
+            <a href="{% url 'clientes' %}" class="btn btn-outline-danger">Cancelar</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

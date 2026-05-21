@@ -10,7 +10,7 @@
       <!-- {{ clientes|length }}: filtro do Django que conta itens de uma lista -->
       <small class="text-muted">{{ clientes|length }} clientes cadastrados</small>
     </div>
-    <button class="btn btn-success btn-sm">+ Novo Cliente</button>
+    <a href="{% url 'novo_cliente' %}" class="btn btn-success btn-sm">+ Novo Cliente</a>
   </div>
 
   <div class="card shadow-sm">
@@ -35,8 +35,8 @@
             </td>
             <td>{{ cliente.email }}</td>
             <td class="text-center">
-              <button class="btn btn-sm btn-outline-primary me-1">Editar</button>
-              <button class="btn btn-sm btn-outline-danger">Excluir</button>
+              <a href="{% url 'editar_cliente' cliente.pk %}" class="btn btn-sm btn-outline-primary me-1">Editar</a>
+              <a href="{% url 'deletar_cliente' cliente.pk %}" class="btn btn-sm btn-outline-danger">Excluir</a>
             </td>
           </tr>
           {% empty %}

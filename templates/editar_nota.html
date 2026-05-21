@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Editar NF-{{ nota.pk }} | NFS-e Manager{% endblock %}
+{% block active_notas %}active{% endblock %}
+{% block content %}
+<div class="mb-4"><h4 class="fw-bold mb-0">Editar Nota #{{ nota.pk }}</h4></div>
+<div class="row justify-content-center">
+  <div class="col-lg-7">
+    <div class="card shadow-sm">
+      <div class="card-header bg-success text-white fw-semibold">Editar NFS-e</div>
+      <div class="card-body p-4">
+        <form method="POST">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Cliente</label>
+            <select name="cliente" class="form-select">
+              {% for c in clientes %}
+              <option value="{{ c.pk }}" {% if c.pk == nota.cliente.pk %}selected{% endif %}>{{ c.nome }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Descrição</label>
+            <textarea name="descricao" class="form-control" rows="4">{{ nota.descricao }}</textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Valor Bruto (R$)</label>
+            <div class="input-group">
+              <span class="input-group-text">R$</span>
+              <input type="number" name="valor" class="form-control" value="{{ nota.valor }}" min="0" step="0.01"/>
+            </div>
+          </div>
+          <div class="mb-4">
+            <label class="form-label fw-semibold">Alíquota ISS (%)</label>
+            <select name="aliquota" class="form-select">
+              {% for val, label in nota.ALIQUOTA_CHOICES %}
+              <option value="{{ val }}" {% if val == nota.aliquota %}selected{% endif %}>{{ label }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-success flex-grow-1">Salvar</button>
+            <a href="{% url 'detalhe_nota' nota.pk %}" class="btn btn-outline-danger">Cancelar</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
